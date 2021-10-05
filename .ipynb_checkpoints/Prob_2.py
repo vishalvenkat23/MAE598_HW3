@@ -1,7 +1,10 @@
-import numpy as np
+import matplotlib.gridspec as gridspec
 import matplotlib.pyplot as plt
-from functools import partial
-from sklearn.gaussian_process import GaussianProcessRegressor
-from sklearn.gaussian_process.kernels import Matern
-from modAL.models import BayesianOptimizer
-from modAL.acquisition import optimizer_EI, max_EI
+import torch
+import torch.autograd as autograd
+import torch.optim as optim
+from torch.distributions import constraints, transform_to
+
+import pyro
+import pyro.contrib.gp as gp
+
