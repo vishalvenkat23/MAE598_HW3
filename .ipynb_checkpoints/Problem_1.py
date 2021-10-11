@@ -18,11 +18,11 @@ x = Variable(torch.tensor([1.0, 1.0]), requires_grad=True)
 a = 0.001
 
 # Start gradient descent
-for i in range(100):  # change the termination criterion
+for i in range(250):  # change the termination criterion
     for i in range(0, len(x1_knob)):
-        loss = (((x1_knob[i] * (torch.exp(x[0] * ((x[1] * x2_knob[i]) / (x[0] * x1_knob[i] + x[1] * x2_knob[i]))) ** 2)) *
-                 p_satw + (x2_knob[i] * (torch.exp(x[1] * ((x[0] * x1_knob[i]) / (x[0] * x1_knob[i] + x[1] * x2_knob[i]))
-                                                   ** 2)) * p_satd)) - p[i]) ** 2
+        loss = ((((x1_knob[i] * torch.exp(x[0] * ((x[1] * x2_knob[i]) / (x[0] * x1_knob[i] + x[1] * x2_knob[i])) ** 2)) *
+                 p_satw) + (x2_knob[i] * torch.exp(x[1] * ((x[0] * x1_knob[i]) / (x[0] * x1_knob[i] + x[1] * x2_knob[i]))
+                                                   ** 2) * p_satd)) - p[i]) ** 2
         loss.backward()
         # print(loss.data.numpy())
     x.grad.numpy()
@@ -36,8 +36,8 @@ for i in range(100):  # change the termination criterion
 print(x.data.numpy())
 print(loss.data.numpy())
 
-for i in range(0, len(p)):
-    p_error = (x1_knob[i] * math.exp(x[0] * ((x[1] * x2_knob[i]) / (x[0] * x1_knob[i] + x[1] * x2_knob[i])) ** 2) * p_satw
+for i in range(0, len(x1_knob)):
+    p_error = ((x1_knob[i] * math.exp(x[0] * ((x[1] * x2_knob[i]) / (x[0] * x1_knob[i] + x[1] * x2_knob[i])) ** 2)) * p_satw
                + (x2_knob[i] * math.exp(x[1] * ((x[0] * x1_knob[i]) / (x[0] * x1_knob[i] + x[1] * x2_knob[i])) ** 2) * p_satd))
     error = float(p[i] - p_error)
     print("Data of P from table ", p[i], "P error = ", p_error, "Error is ", error)
